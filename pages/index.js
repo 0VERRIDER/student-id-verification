@@ -11,7 +11,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
-        
+        <button className={styles.loginBtn}>LOGIN</button>
+        <button className={styles.registerBtn}>Register</button>
      </div>
      <div className={styles.subMain}>
        
