@@ -16,8 +16,8 @@ export default function Home() {
         <button className={styles.registerBtn}>Register</button>
      </div>
      <div className={styles.subMain}>
-       <div className={styles.student_id} >
-       <Image src={Logo} alt="student id logo" className={styles.studentId} width={2} height={2} layout='responsive'></Image>
+       <div className={styles.student_id} width={100} height={100} >
+       <Image src={Logo} alt="student id logo" className={styles.studentId} layout='fill' ></Image>
        </div>
      </div>
 
