@@ -5,5 +5,8 @@ html,body{
   margin: 0;
   padding: 0;
 }
-
+hr{
+  border-color: rgba(221, 221, 221, 0.247);
+  width: 25vw;
+}
 

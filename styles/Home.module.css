@@ -2,10 +2,13 @@
     position: absolute;
        top:0;
        left: 0;
-    display: block;
-        background-color: red;
+    display: flex;
         width:50%;
         height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
        
 }
 .subMain{
@@ -13,6 +16,7 @@
        top:0;
        right: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     right: 0;
@@ -20,18 +24,34 @@
     height: 100vh;
 }
 .loginBtn,.registerBtn{
-    background-color: transparent;
+    background-color: black;
+    color: white;
+    height: 45px;
+    text-transform: capitalize;
+    font-weight: bold;
+    width: 150px;
+    border-radius: 50px;
     border:none;
-    
+    margin: 10px;
 }
 .student_id{
     display: block;
-    margin: auto;
 
 }
 
 .companyLogo{
 display: block;
-margin: auto;
 
 }
+.orSeperator{
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    margin-top:-25px;
+    margin-left: 11.4vw;
+    background-color: white;
+    padding: 10px;
+    font-size: 10px;
+    color: rgb(158, 158, 158);
+    
+}
+

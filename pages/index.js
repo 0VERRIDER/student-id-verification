@@ -13,7 +13,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
-        <button className={styles.loginBtn}>LOGIN</button>
+        <button className={styles.loginBtn}>Login</button>
+        <div className={styles.seperator}><hr></hr><span className={styles.orSeperator}>OR</span></div>
         <button className={styles.registerBtn}>Register</button>
      </div>
      <div className={styles.subMain}>
@@ -21,7 +22,7 @@ export default function Home() {
        <Image src={BannerIcon} alt="student id logo" layout="fixed" width={200} height={200}></Image>
        </div>
        <div className={styles.companyLogo}>
-       <Image src={Logo} alt="Company logo" layout="fixed" width={200} height={200}></Image>
+       <Image src={Logo} alt="Company logo" layout="fixed" width={150} height={150}></Image>
        </div>
      </div>
 
