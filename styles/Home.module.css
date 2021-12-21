@@ -12,9 +12,10 @@
     position: absolute;
        top:0;
        right: 0;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     right: 0;
-    background-color: green;
     width: 50%;
     height: 100vh;
 }
@@ -24,8 +25,13 @@
     
 }
 .student_id{
-    margin-left: 15vw;
+    display: block;
+    margin: auto;
+
 }
-.student_id > img{
+
+.companyLogo{
+display: block;
+margin: auto;
 
 }

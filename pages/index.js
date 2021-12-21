@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Logo from '../public/id_verification.png'
+import BannerIcon from '../public/id_verification.png'
+import Logo from '../public/logo.svg'
 
 export default function Home() {
   return (
@@ -16,8 +17,11 @@ export default function Home() {
         <button className={styles.registerBtn}>Register</button>
      </div>
      <div className={styles.subMain}>
-       <div className={styles.student_id} width={100} height={100} >
-       <Image src={Logo} alt="student id logo" className={styles.studentId} layout='fill' ></Image>
+       <div className={styles.student_id}>
+       <Image src={BannerIcon} alt="student id logo" layout="fixed" width={200} height={200}></Image>
+       </div>
+       <div className={styles.companyLogo}>
+       <Image src={Logo} alt="Company logo" layout="fixed" width={200} height={200}></Image>
        </div>
      </div>
 
