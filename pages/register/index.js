@@ -3,7 +3,6 @@ import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
-
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -11,11 +10,11 @@ export default function Home() {
       <div className={styles.main}>
        <form className={styles.loginForm}>
            <h1 className={styles.logTitle}>Register</h1>
-           <input className={styles.logField} placeholder="Full Name" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Full Name" autoFocus={true}></input>
            <input className={styles.logField} placeholder="Email"></input>
-           <input className={styles.logField} placeholder="Phone number" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Phone number" ></input>
            <input className={styles.logField} placeholder="Date of Birth (dd/mm/yyyy)"></input>
-           <input className={styles.logField} placeholder="Password" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Password" ></input>
            <input className={styles.logField} placeholder="Confirm Password"></input>
            <button className={styles.logButton}>Sign Up</button>
        </form>

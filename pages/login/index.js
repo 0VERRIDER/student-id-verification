@@ -11,7 +11,7 @@ export default function Home() {
       <div className={styles.main}>
        <form className={styles.loginForm}>
            <h1 className={styles.logTitle}>Login</h1>
-           <input className={styles.logField} placeholder="Username or Email" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Username or Email" autoFocus={true}></input>
            <input className={styles.logField} placeholder="Password"></input>
            <button className={styles.logButton}>Sign in</button>
        </form>
