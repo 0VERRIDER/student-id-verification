@@ -3,18 +3,21 @@ import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
-
+import Qr from '../../public/qr.svg'
 export default function Home() {
   return (
     <div className={styles.container}>
 
       <div className={styles.main}>
-       <form className={styles.loginForm}>
-           <h1 className={styles.logTitle}>Login</h1>
-           <input className={styles.logField} placeholder="Username or Email" autoFocus="true"></input>
-           <input className={styles.logField} placeholder="Password"></input>
-           <button className={styles.logButton}>Sign in</button>
-       </form>
+      <div className={styles.qr_link}>
+       <Image src={Qr} alt="QrCode" layout="fixed" width={100} height={100}></Image>
+       </div>
+       <div className={styles.subText}>Scan to continue in Mobile device</div>
+       <div className={styles.seperator}><hr></hr><span className={styles.orSeperator}>OR</span></div>
+       <form action="/action_page.php">
+            <input type="file" id="myFile" name="filename"/>
+        <input type="submit"/>
+        </form>
      </div>
      <div className={styles.subMain}>
        <div className={styles.student_id}>

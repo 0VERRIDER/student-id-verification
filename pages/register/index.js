@@ -10,10 +10,14 @@ export default function Home() {
 
       <div className={styles.main}>
        <form className={styles.loginForm}>
-           <h1 className={styles.logTitle}>Login</h1>
-           <input className={styles.logField} placeholder="Username or Email" autoFocus="true"></input>
-           <input className={styles.logField} placeholder="Password"></input>
-           <button className={styles.logButton}>Sign in</button>
+           <h1 className={styles.logTitle}>Register</h1>
+           <input className={styles.logField} placeholder="Full Name" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Email"></input>
+           <input className={styles.logField} placeholder="Phone number" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Date of Birth (dd/mm/yyyy)"></input>
+           <input className={styles.logField} placeholder="Password" autoFocus="true"></input>
+           <input className={styles.logField} placeholder="Confirm Password"></input>
+           <button className={styles.logButton}>Sign Up</button>
        </form>
      </div>
      <div className={styles.subMain}>
