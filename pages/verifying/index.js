@@ -88,6 +88,9 @@ export default function Home() {
 <div className={styles.subText}>
 Make sure that the document is not blurry
 </div>
+<div className={styles.subInstruction}>
+It may take a while. Sit back and relax.
+</div>
     </div>
   )
 }
