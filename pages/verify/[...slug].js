@@ -1,16 +1,16 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
-import Qr from '../../public/qr.svg'
+
 export default function Home() {
   return (
     <div className={styles.container}>
 
       <div className={styles.main}>
       <div className={styles.qr_link}>
-       <Image src={Qr} alt="QrCode" layout="fixed" width={100} height={100}></Image>
+        
+       {/* <Image src={Qr} alt="QrCode" layout="fixed" width={100} height={100}></Image> */}
        </div>
        <div className={styles.subText}>Scan to continue in Mobile device</div>
        <div className={styles.seperator}><hr></hr><span className={styles.orSeperator}>OR</span></div>

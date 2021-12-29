@@ -3,6 +3,8 @@ import styles from '../../styles/Home.module.css'
 import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
 import { useState } from 'react'
+import Router from 'next/router'
+
 export default function Home() {
   const [info,setInfo] = useState();
   const signup = async (event)=>{
@@ -20,10 +22,11 @@ export default function Home() {
         "Content-Type": "application/json"
       }
     });
-    const data = response.statusText;
-    console.log(data);
-    setInfo(data);
-    
+    const id = await response.text();
+    setInfo(response.statusText);
+    if(response.ok){
+      Router.push("/verify/"+id);
+    }
   }
   return (
     <div className={styles.container}>
