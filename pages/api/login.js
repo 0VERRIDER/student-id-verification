@@ -1,6 +1,8 @@
+import mongoose from 'mongoose';
 import connectDB from '../../middleware/mongo';
 import Users from '../../models/student-model';
-
+import { serialize } from 'cookie';
+import jwt from 'jsonwebtoken';
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     let email = req.body.email;
@@ -28,10 +30,13 @@ const handler = async (req, res) => {
                         },"azure-frt",{
                         expiresIn : "1h"
                     })
-                    res.cookie('token', token, { httpOnly: true });
-                    res.status(200).json({
-                    message: "User authenticated"
-                });}
+                    res.setHeader('Set-Cookie', serialize('token', token, { httpOnly: true }));
+                    res.redirect("/Home");
+
+                    // res.status(200).json({
+                    //     message: "User authenticated"
+                    // });
+                    }
                 else{
                     res.status(401).json({
                         message: "Authentication error !",

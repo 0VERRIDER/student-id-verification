@@ -1,25 +1,27 @@
 import connectDB from '../../middleware/mongo';
 import User from '../../models/student-model';
+import mongoose from 'mongoose'
 
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     // Check if name, email or password is provided
-    const { id,name, email, mobile, Dob, password } = req.body;
-    if (id && name && email && mobile && Dob && password ) {
+    const { name, email, mobile, Dob, password } = req.body;
+    if (name && email && mobile && Dob && password ) {
         try {
           // Hash password to store it in DB
-          var passwordhash = password;
+          var id = mongoose.Types.ObjectId().toString().slice(5,11);
           var user = new User({
-            id,
-            name,
-            email,
-            mobile,
-            Dob,
-            password: passwordhash,
+            id: id,
+            name:req.body.name,
+            email:req.body.email,
+            mobile:req.body.mobile,
+            Dob:req.body.Dob,
+            password:req.body.password,
           });
           // Create new user
           var usercreated = await user.save();
-          return res.status(200).send(usercreated);
+          return res.status(200).send(id);
+
         } catch (error) {
           return res.status(500).send(error.message);
         }

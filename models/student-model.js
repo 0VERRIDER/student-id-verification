@@ -3,15 +3,16 @@ import bcrypt from 'bcryptjs'
 const SALT_WORK_FACTOR = 10;
 var Schema = mongoose.Schema;
 var studentSchema = new Schema({
-    id: {type: Number, required: true, unique: true},
-    name: String,
-    email:String,
-    mobile: String,
-    Dob: String,
-    password: String,
+    id: {type: String,required: true,immutable: true},
+    name: {type:String, required:true},
+    email:{type: String,required: true,unique: true, dropDups: true, match:/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/},
+    mobile: {type: String,required: true,unique: true, dropDups: true},
+    Dob: {type:String, required:true},
+    password: {type:String, required:true},
     created_time: {type: Date,required: true,immutable:true, default:new Date()},
     updated_time: {type: Date,required: true, default: new Date()}
 })
+studentSchema.index({email : 1, mobile :1 },{unique:true,dropDups: true})
 mongoose.models = {};
 studentSchema.pre('save', function(next) {
     var user = this;

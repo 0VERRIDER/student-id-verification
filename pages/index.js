@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import BannerIcon from '../public/id_verification.png'
 import Logo from '../public/logo.svg'
-
+import Link from 'next/link'
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -13,9 +13,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
-        <button className={styles.loginBtn}>Login</button>
+        <Link href="/login" passHref={true}>
+        <button className={styles.loginBtn}>Login</button></Link>
         <div className={styles.seperator}><hr></hr><span className={styles.orSeperator}>OR</span></div>
-        <button className={styles.registerBtn}>Register</button>
+        <Link href="/register" passHref={true}><button className={styles.registerBtn}>Register</button>
+     </Link>
      </div>
      <div className={styles.subMain}>
        <div className={styles.student_id}>
