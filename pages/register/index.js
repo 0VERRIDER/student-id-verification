@@ -9,7 +9,7 @@ export default function Home() {
   const [info,setInfo] = useState();
   const signup = async (event)=>{
     event.preventDefault();
-    const response = await fetch("/api/register",{
+    const response = await fetch("http://student-id-verification.azurewebsites.net/api/register",{
       method : 'POST',
       body : JSON.stringify({
         "name" : event.target.username.value,

@@ -33,7 +33,7 @@ export default function Home() {
 //     }
 //   setCount(count - 1);
 // }, 1000);
-fetch('/api/getter',{
+fetch('http://student-id-verification.azurewebsites.net/api/getter',{
   method: "POST",
   body:JSON.stringify(
     {
@@ -69,7 +69,7 @@ const sendmail = async (id,email,authCode,name) =>{
   })
 }
 const checkStat= () => {
-  fetch('/api/getter',{
+  fetch('http://student-id-verification.azurewebsites.net/api/getter',{
     method: "POST",
     body:JSON.stringify(
       {

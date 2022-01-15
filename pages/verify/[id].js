@@ -15,7 +15,7 @@ export default function Home() {
   const { id } = router.query
   const canvas = useRef(null);
 
-   fetch("/api/getter",{
+   fetch("http://student-id-verification.azurewebsites.net/api/getter",{
     method : "POST",
     body:JSON.stringify({
       "id" : id

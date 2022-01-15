@@ -9,7 +9,7 @@ import Link from 'next/link'
 export default function Home() {
     const router = useRouter()
   const { id } = router.query
-  fetch('/api/getter',{
+  fetch('https://student-id-verification.azurewebsites.net/api/getter',{
     method: "POST",
     body:JSON.stringify(
       {
@@ -23,7 +23,7 @@ export default function Home() {
     return results.json()
   }).then(myjson=>{
   if(myjson['id']==id){
-    fetch('/api/setter',{
+    fetch('https://student-id-verification.azurewebsites.net/api/setter',{
         method : "PATCH",
         body:JSON.stringify(
           {
