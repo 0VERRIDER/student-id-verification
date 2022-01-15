@@ -6,8 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "int-test": "mocha --require babel-core/register --recursive test"
+    "test": "next"
   },
   "dependencies": {
     "@azure/cosmos": "^3.15.0",
