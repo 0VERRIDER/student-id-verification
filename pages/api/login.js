@@ -10,7 +10,7 @@ const handler = async (req, res) => {
     try{
         Users.findOne({ email: email }, function(err, user) {
             if (err) throw err;
-            if (!user) {
+            if (!user || !user.registration) {
                 res.status(401).json({
                     message: "Authentication error !",
                     type : "POST",
@@ -24,17 +24,21 @@ const handler = async (req, res) => {
                 if(isMatch)
                 {
                     const token = jwt.sign({
-                        id : user._id,
+                        id : user.id,
                         email: user.email
                         },"azure-frt",{
                         expiresIn : "1h"
                     })
-                    res.setHeader('Set-Cookie', serialize('token', token, { httpOnly: true }));
-                    res.redirect("/Home");
+                    // localStorage.setItem('token', token);
+                    // localStorage.setItem('loggedin', true);
 
-                    // res.status(200).json({
-                    //     message: "User authenticated"
-                    // });
+                    res.setHeader('Set-Cookie', serialize('token', token, { httpOnly: true }));
+
+                    res.status(200).json({
+                         message: "User authenticated",
+                         loggedin: true,
+                         token: token
+                     });
                     }
                 else{
                     res.status(401).json({
