@@ -3,9 +3,45 @@ import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import verified from '../../public/success.svg'
 import Logo from '../../public/logo.svg'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 export default function Home() {
+    const router = useRouter()
+  const { id } = router.query
+  fetch('/api/getter',{
+    method: "POST",
+    body:JSON.stringify(
+      {
+        id: id
+      }
+    ),
+    headers:{
+      "Content-Type": "application/json"
+    }
+  }).then(results=>{
+    return results.json()
+  }).then(myjson=>{
+  if(myjson['id']==id){
+    fetch('/api/setter',{
+        method : "PATCH",
+        body:JSON.stringify(
+          {
+            id:id,
+            "vregSet": "true"
+          }
+        ),
+        headers:{
+          "Content-Type":"application/json"
+        }
+      })
+
+    }
+
+
+  })
+  
+
   return (
     <div className={styles.container}>
 <div className={styles.logoHeader}>
@@ -17,13 +53,14 @@ export default function Home() {
     </div>
 </div>
 <div className={styles.mainText}>
-Account Created Successfully.
+Account Verified Successfully.
 </div>
 <div className={styles.subText}>
-Welcome to our humble family
+Continue in previous page or Login here
 </div>
 <Link href="/login" passHref={true}>
 <button className={styles.logButtonRedirect}>Login</button>
-</Link>    </div>
+</Link>
+    </div>
   )
 }

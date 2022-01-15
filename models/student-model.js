@@ -9,6 +9,9 @@ var studentSchema = new Schema({
     mobile: {type: String,required: true,unique: true, dropDups: true},
     Dob: {type:String, required:true},
     password: {type:String, required:true},
+    registration:{type:Boolean, required: true, default: false},
+    verification:{type: Boolean, required: true, default: false},
+    image_location:{type: String, default:"image_location"},
     created_time: {type: Date,required: true,immutable:true, default:new Date()},
     updated_time: {type: Date,required: true, default: new Date()}
 })

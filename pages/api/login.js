@@ -13,7 +13,6 @@ const handler = async (req, res) => {
             if (!user) {
                 res.status(401).json({
                     message: "Authentication error !",
-                    do : "/user/login",
                     type : "POST",
                     param : "username,password"
                 });

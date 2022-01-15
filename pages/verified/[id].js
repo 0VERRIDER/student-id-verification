@@ -3,8 +3,17 @@ import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import verified from '../../public/success.svg'
 import Logo from '../../public/logo.svg'
+import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 export default function Home() {
+  const router = useRouter()
+  const { id } = router.query
+
+  setTimeout(()=>{
+    Router.push("/email_verification/"+id)
+  },5000)
+  
   return (
     <div className={styles.container}>
 <div className={styles.logoHeader}>
@@ -12,7 +21,7 @@ export default function Home() {
 </div>
 <div className={styles.verifying}>
     <div className={styles.success}>
-<Image src={verified} alt="Successful" layout="fixed" width={90} height={90}></Image>
+<Image src={verified} alt="Successfull" layout="fixed" width={90} height={90}></Image>
     </div>
 </div>
 <div className={styles.mainText}>
