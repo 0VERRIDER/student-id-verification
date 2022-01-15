@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "next"
+    "test": "mocha"
   },
   "dependencies": {
     "@azure/cosmos": "^3.15.0",
