@@ -22,7 +22,8 @@ export default function Home() {
       }
     ),
     headers:{
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     }
   }).then(results=>{
     return results.json()
@@ -37,7 +38,8 @@ export default function Home() {
           }
         ),
         headers:{
-          "Content-Type":"application/json"
+          "Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
         }
       })
 

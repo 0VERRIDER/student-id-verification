@@ -22,7 +22,8 @@ export default function Home() {
        "id" : id
      }),
      headers:{
-       "Content-Type": "application/json"
+       "Content-Type": "application/json",
+       "Access-Control-Allow-Origin": "*"
      }
    }).then((result)=>{
      return result.json();
@@ -80,7 +81,8 @@ fetch('https://student-id-verification.azurewebsites.net/api/setter',{
     }
   ),
   headers:{
-    "Content-Type":"application/json"
+    "Content-Type":"application/json",
+    "Access-Control-Allow-Origin": "*"
   }
 })
 Router.push("/verifying/"+id)

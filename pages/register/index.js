@@ -20,7 +20,8 @@ export default function Home() {
     "password": event.target.password.value
       }),
       headers:{
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       }
     }).then((result)=>{
       return result.json()

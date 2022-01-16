@@ -44,7 +44,8 @@ useEffect(() => {
     }
   ),
   headers:{
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
   }
 }).then(results=>{
   return results.json()
@@ -90,7 +91,8 @@ const checkStat= () => {
       }
     ),
     headers:{
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     }
   }).then(results=>{
     return results.json()
