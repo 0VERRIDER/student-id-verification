@@ -1,8 +1,10 @@
-import mongoose from 'mongoose';
 import connectDB from '../../middleware/mongo';
 import Users from '../../models/student-model';
 import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     let email = req.body.email;
@@ -44,7 +46,7 @@ const handler = async (req, res) => {
                     const token = jwt.sign({
                         id : user.id,
                         email: user.email
-                        },"azure-frt",{
+                        },publicRuntimeConfig.jwt_token_key,{
                         expiresIn : "1h"
                     })
                     // localStorage.setItem('token', token);

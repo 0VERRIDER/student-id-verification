@@ -6,13 +6,16 @@ import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
 import Router from 'next/router'
 import { useEffect } from 'react'
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 export default function Home() {
   const router = useRouter()
   const { id } = router.query
 
 
   useEffect(() => {
-    fetch('/api/getter',{
+    fetch(publicRuntimeConfig.host_address+'api/getter',{
       method: "POST",
       body:JSON.stringify(
         {

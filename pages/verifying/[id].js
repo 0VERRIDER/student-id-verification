@@ -5,6 +5,9 @@ import dummyId from '../../public/check_id.svg'
 import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 export default function Home() {
   const router = useRouter()
   const { id } = router.query
@@ -15,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     let name = "";
     let counter = 0;
-    fetch('/api/getter',{
+    fetch(publicRuntimeConfig.host_address+'api/getter',{
       method: "POST",
       body:JSON.stringify(
         {
@@ -33,11 +36,11 @@ export default function Home() {
       userAction(myjson['image']);
     })
     const userAction = async (file_to_do) => {
-      const response = await fetch('https://textextractorservice.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyze', {
+      const response = await fetch(publicRuntimeConfig.form_rec_url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Ocp-Apim-Subscription-Key' : '97e1f6031f7443549890b7e750206197'
+          'Ocp-Apim-Subscription-Key' : publicRuntimeConfig.form_rec_key
         },
         body: JSON.stringify({source:file_to_do})
       });

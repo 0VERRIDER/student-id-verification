@@ -6,13 +6,15 @@ import Logo from '../../public/logo.svg'
 import Router,{ useRouter } from 'next/router'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
 export default function Home() {
     const router = useRouter()
   const { id } = router.query
 
   useEffect(() => {
-    fetch('/api/getter',{
+    fetch(publicRuntimeConfig.host_address+'api/getter',{
     method: "POST",
     body:JSON.stringify(
       {
@@ -26,7 +28,7 @@ export default function Home() {
     return results.json()
   }).then(myjson=>{
   if(myjson['id']==id && myjson['vstat']!=false){
-    fetch('/api/setter',{
+    fetch(publicRuntimeConfig.host_address+'api/setter',{
         method : "PATCH",
         body:JSON.stringify(
           {

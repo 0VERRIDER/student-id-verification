@@ -5,6 +5,8 @@ import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
 import Router from 'next/router'
 import { useEffect } from 'react'
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 // import { useEffect,useState,useRef } from 'react'
 // function useInterval(callback, delay) {
 //     const savedCallback = useRef();
@@ -35,7 +37,7 @@ export default function Home() {
 //   setCount(count - 1);
 // }, 1000);
 useEffect(() => {
-  fetch('/api/getter',{
+  fetch(publicRuntimeConfig.host_address+'api/getter',{
   method: "POST",
   body:JSON.stringify(
     {
@@ -67,7 +69,7 @@ else{
 
 
 const sendmail = async (id,email,authCode,name) =>{
-  await fetch("https://prod-16.northcentralus.logic.azure.com:443/workflows/cbeadc2976de4c929f6ffbd9843f0ba0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WOyYPxeSt-rWU08jp8a73D_I6TIVVUp6kAUGLGHLu50",{
+  await fetch(publicRuntimeConfig.email_client_url,{
     method : "POST",
     body: JSON.stringify({
       id: id,
@@ -81,7 +83,7 @@ const sendmail = async (id,email,authCode,name) =>{
   })
 }
 const checkStat= () => {
-  fetch('/api/getter',{
+  fetch(publicRuntimeConfig.host_address+'api/getter',{
     method: "POST",
     body:JSON.stringify(
       {

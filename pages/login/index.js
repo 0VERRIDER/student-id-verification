@@ -5,11 +5,14 @@ import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
 import Router from 'next/router'
 import { useState } from 'react'
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 export default function Home() {
 const [info,setInfo] = useState("");
   const login = async (event)=>{
     event.preventDefault();
-    await fetch("/api/login",{
+    await fetch(publicRuntimeConfig.host_address+"api/login",{
       method: "POST",
       body:JSON.stringify({
         email:event.target.email.value,

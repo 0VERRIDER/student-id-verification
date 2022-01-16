@@ -4,12 +4,14 @@ import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
 import { useState } from 'react'
 import Router from 'next/router'
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
 export default function Home() {
   const [info,setInfo] = useState();
   const signup = async (event)=>{
     event.preventDefault();
-    await fetch("/api/register",{
+    await fetch(publicRuntimeConfig.host_address+"/api/register",{
       method : 'POST',
       body : JSON.stringify({
         "name" : event.target.username.value,
