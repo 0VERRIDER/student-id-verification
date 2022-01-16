@@ -2,8 +2,7 @@ import connectDB from '../../middleware/mongo';
 import Users from '../../models/student-model';
 import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';
-import getConfig from 'next/config'
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 
 const handler = async (req, res) => {
   if (req.method === 'POST') {
@@ -46,7 +45,7 @@ const handler = async (req, res) => {
                     const token = jwt.sign({
                         id : user.id,
                         email: user.email
-                        },publicRuntimeConfig.jwt_token_key,{
+                        },"azure-frt",{
                         expiresIn : "1h"
                     })
                     // localStorage.setItem('token', token);

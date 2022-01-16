@@ -7,7 +7,7 @@ const connectDB = handler => async (req, res) => {
     // Use current db connection
     return handler(req, res);
   }
-  const mongodburl= `mongodb://${serverRuntimeConfig.db_name}:${serverRuntimeConfig.db_key}@${serverRuntimeConfig.db_name}.mongo.cosmos.azure.com:${serverRuntimeConfig.db_port}/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@${serverRuntimeConfig.db_name}@`;
+  const mongodburl= `mongodb://student-validator-frt:uWCdAD54944i24qSgg8FcxBxSRTvcK06Em1TI2XckcwbBUepsFLi2A90fzXWVGFZw8A5qvlSqZusOsszwGJWOA==@student-validator-frt.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@student-validator-frt@`;
   // Use new db connection
   await mongoose.connect(mongodburl, {
     

@@ -5,8 +5,7 @@ import dummyId from '../../public/check_id.svg'
 import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import getConfig from 'next/config'
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 
 export default function Home() {
   const router = useRouter()
@@ -18,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     let name = "";
     let counter = 0;
-    fetch(publicRuntimeConfig.host_address+'api/getter',{
+    fetch('https://student-id-verification.azurewebsites.net/api/getter',{
       method: "POST",
       body:JSON.stringify(
         {
@@ -36,11 +35,11 @@ export default function Home() {
       userAction(myjson['image']);
     })
     const userAction = async (file_to_do) => {
-      const response = await fetch(publicRuntimeConfig.form_rec_url, {
+      const response = await fetch("https://textextractorservice.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyze", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Ocp-Apim-Subscription-Key' : publicRuntimeConfig.form_rec_key
+          'Ocp-Apim-Subscription-Key' : "97e1f6031f7443549890b7e750206197"
         },
         body: JSON.stringify({source:file_to_do})
       });
@@ -84,7 +83,7 @@ export default function Home() {
       });
       console.log(name.toLowerCase());
       if (counter>0){
-        fetch(publicRuntimeConfig.host_address+'api/setter',{
+        fetch('https://student-id-verification.azurewebsites.net/api/setter',{
           method : "PATCH",
           body:JSON.stringify(
             {

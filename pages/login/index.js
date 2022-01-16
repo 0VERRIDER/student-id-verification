@@ -12,7 +12,7 @@ export default function Home() {
 const [info,setInfo] = useState("");
   const login = async (event)=>{
     event.preventDefault();
-    await fetch(publicRuntimeConfig.host_address+"api/login",{
+    await fetch("https://student-id-verification.azurewebsites.net/api/login",{
       method: "POST",
       body:JSON.stringify({
         email:event.target.email.value,

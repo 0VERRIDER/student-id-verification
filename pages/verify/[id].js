@@ -7,8 +7,7 @@ import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
 import QRcode from 'qrcode'
 import { useEffect } from 'react'
-import getConfig from 'next/config'
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 
 export default function Home() {
   const router = useRouter()
@@ -17,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    fetch(publicRuntimeConfig.host_address+"api/getter",{
+    fetch("https://student-id-verification.azurewebsites.net/api/getter",{
      method : "POST",
      body:JSON.stringify({
        "id" : id
@@ -56,14 +55,14 @@ export default function Home() {
     event.preventDefault();
     const formData = new FormData()
     formData.append('file', event.target.file.files[0])
-    formData.append('api_key', publicRuntimeConfig.cloudinary_key)
-    formData.append('upload_preset', publicRuntimeConfig.cloudinary_preset)
+    formData.append('api_key', "437438877154349")
+    formData.append('upload_preset', "upload_frt")
     formData.append('public_id', id)
 
 
    
 
-    await fetch(publicRuntimeConfig.cloudinary_url,{
+    await fetch("https://api.cloudinary.com/v1_1/overrider/upload",{
       method : 'POST',
       body : formData,
       
@@ -72,7 +71,7 @@ export default function Home() {
   }).then((myjson)=>{
     if(myjson['existing']==true)
 {      
-fetch(publicRuntimeConfig.host_address+'api/setter',{
+fetch('https://student-id-verification.azurewebsites.net/api/setter',{
   method : "PUT",
   body:JSON.stringify(
     {
