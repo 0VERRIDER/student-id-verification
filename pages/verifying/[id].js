@@ -31,7 +31,7 @@ export default function Home() {
     }).then(results=>{
       return results.json()
     }).then(myjson=>{
-      console.log(myjson['image'])
+     // console.log(myjson['image'])
       name = myjson['name'];
       userAction(myjson['image']);
     })
@@ -48,12 +48,12 @@ export default function Home() {
       let location= response.headers.get('Operation-Location');
       // do something with myJson
       if(response.status == 202){
-        console.log("Loading....");
+        //console.log("Loading....");
   
         setTimeout(getData(location),5000);
       }
       else{
-        console.log("error Occured");
+       // console.log("error Occured");
       }
     }
     function getData(location){ 
@@ -66,7 +66,7 @@ export default function Home() {
       }
     }
       ).then(result =>{
-        console.log(location)
+        //console.log(location)
         const myData = result.json()
       return myData
     }).then(myjson=>{
@@ -78,7 +78,6 @@ export default function Home() {
       let data = extract(myjson["analyzeResult"]["readResults"][0]["lines"]);
       data.forEach(item => {
         if(item.toLowerCase() == name.toLowerCase()){
-          console.log("Checking " + item.toLowerCase() + " = " + name.toLowerCase())
           counter = counter+1;
         }
       });
@@ -104,12 +103,12 @@ export default function Home() {
       }
       }
       else{
-        console.log("Extraction Unsuccessful");
-        console.log(name.toLowerCase());
+       // console.log("Extraction Unsuccessful");
+       // console.log(name.toLowerCase());
   
       }
     }).catch(err=>{
-      console.log("Extraction unsuccessful");
+     // console.log("Extraction unsuccessful");
     });
   }
   const extract = (arr) => arr.reduce((acc, obj) => acc.concat(obj.text, extract(obj.items || [])), [])

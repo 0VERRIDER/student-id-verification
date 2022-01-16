@@ -43,7 +43,7 @@ export default function Home() {
    if (canvas){
        QRcode.toCanvas(canvas.current, window.location.href)}
          else{
-             console.log("error")
+            // console.log("error")
          }
        }
        catch(err){
@@ -88,7 +88,7 @@ fetch('https://student-id-verification.azurewebsites.net/api/setter',{
 Router.push("/verifying/"+id)
 }    
   }).catch(err=>{
-    console.log(err)
+    //console.log(err)
   })
   
 }
