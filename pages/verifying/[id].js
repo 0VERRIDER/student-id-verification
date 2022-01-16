@@ -84,7 +84,7 @@ export default function Home() {
       });
       console.log(name.toLowerCase());
       if (counter>0){
-        fetch('/api/setter',{
+        fetch(publicRuntimeConfig.host_address+'api/setter',{
           method : "PATCH",
           body:JSON.stringify(
             {

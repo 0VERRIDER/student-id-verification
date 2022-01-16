@@ -11,7 +11,7 @@ export default function Home() {
   const [info,setInfo] = useState();
   const signup = async (event)=>{
     event.preventDefault();
-    await fetch(publicRuntimeConfig.host_address+"/api/register",{
+    await fetch(publicRuntimeConfig.host_address+"api/register",{
       method : 'POST',
       body : JSON.stringify({
         "name" : event.target.username.value,
