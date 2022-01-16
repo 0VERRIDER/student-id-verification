@@ -10,12 +10,30 @@ const handler = async (req, res) => {
     try{
         Users.findOne({ email: email }, function(err, user) {
             if (err) throw err;
-            if (!user || !user.registration) {
+            if (!user ) {
                 res.status(401).json({
-                    message: "Authentication error !",
-                    type : "POST",
-                    param : "username,password"
+                    message: "No user found",
+                    loggedin:false,
+                    error:"user"
                 });
+            }
+            else if(!user.verification){
+                res.status(403).send({
+                    message: " ID Not verified",
+                    loggedin: false,
+                    id:user.id,
+                    page:"/verify/"+user.id,
+                    error:"verification"
+                })
+            }
+            else if(!user.registration){
+                res.status(403).send({
+                    message: "Email not verified",
+                    loggedin:false,
+                    id: user.id,
+                    page:"/email_verification/"+user.id,
+                    error:"email_verification"
+                })
             }
             else
             {// test a matching password
@@ -42,10 +60,9 @@ const handler = async (req, res) => {
                     }
                 else{
                     res.status(401).json({
-                        message: "Authentication error !",
-                        do : "/user/login",
-                        type : "POST",
-                        param : "username,password"
+                    message: "No user found",
+                    loggedin:false,
+                    error:"user"
                     });
                 }
             })}

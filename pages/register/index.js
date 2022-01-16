@@ -9,7 +9,7 @@ export default function Home() {
   const [info,setInfo] = useState();
   const signup = async (event)=>{
     event.preventDefault();
-    const response = await fetch("http://student-id-verification.azurewebsites.net/api/register",{
+    await fetch("/api/register",{
       method : 'POST',
       body : JSON.stringify({
         "name" : event.target.username.value,
@@ -21,12 +21,20 @@ export default function Home() {
       headers:{
         "Content-Type": "application/json"
       }
-    });
-    const id = await response.text();
-    setInfo(response.statusText);
-    if(response.ok){
-      Router.push("/verify/"+id);
-    }
+    }).then((result)=>{
+      return result.json()
+    }).then(myjson=>{
+      if(myjson['status']===true){
+        Router.push("/verify/"+myjson["id"])
+      }
+      else if (myjson['status'] === false){
+        if(myjson['error']=="E11000 duplicate key error collection: test.students. Failed _id or unique index constraint.")
+        setInfo("Account Already exist")
+        else
+        setInfo("Something Went Wrong")
+      }
+    })
+   
   }
   return (
     <div className={styles.container}>
@@ -35,7 +43,7 @@ export default function Home() {
        <form className={styles.loginForm} onSubmit={signup} >
            <h1 className={styles.logTitle}>Register</h1>
            <span className={styles.subText}>{info}</span>
-           <input name="username" className={styles.logField} placeholder="Full Name" autoFocus={true}></input>
+           <input name="username" className={styles.logField} placeholder="Full Name as per your ID" autoFocus={true}></input>
            <input name="email" type="email" className={styles.logField} placeholder="Email"></input>
            <input name="mobile" type="tel" className={styles.logField} placeholder="Phone number" ></input>
            <input name="dob" className={styles.logField}  placeholder="Date of Birth (dd/mm/yyyy)"></input>

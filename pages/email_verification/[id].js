@@ -4,6 +4,7 @@ import verified from '../../public/email_sent.svg'
 import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
 import Router from 'next/router'
+import { useEffect } from 'react'
 // import { useEffect,useState,useRef } from 'react'
 // function useInterval(callback, delay) {
 //     const savedCallback = useRef();
@@ -33,7 +34,8 @@ export default function Home() {
 //     }
 //   setCount(count - 1);
 // }, 1000);
-fetch('http://student-id-verification.azurewebsites.net/api/getter',{
+useEffect(() => {
+  fetch('/api/getter',{
   method: "POST",
   body:JSON.stringify(
     {
@@ -46,13 +48,23 @@ fetch('http://student-id-verification.azurewebsites.net/api/getter',{
 }).then(results=>{
   return results.json()
 }).then(myjson=>{
-  if(myjson['vreg']===false){
+  if(myjson['vreg']===false && myjson['vstat']===true){
   sendmail(myjson['id'],myjson['email'],myjson['id'],myjson['name']);
   setTimeout(()=>{
     Router.push("/email_verification/"+id)
   },5000)
 }
+else if(myjson['vreg']===false && myjson['vstat']===false){
+  Router.push("/")
+}
+else{
+  Router.push("/account_done")
+
+}
 })
+
+}, [id])
+
 
 const sendmail = async (id,email,authCode,name) =>{
   await fetch("https://prod-16.northcentralus.logic.azure.com:443/workflows/cbeadc2976de4c929f6ffbd9843f0ba0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WOyYPxeSt-rWU08jp8a73D_I6TIVVUp6kAUGLGHLu50",{
@@ -69,7 +81,7 @@ const sendmail = async (id,email,authCode,name) =>{
   })
 }
 const checkStat= () => {
-  fetch('http://student-id-verification.azurewebsites.net/api/getter',{
+  fetch('/api/getter',{
     method: "POST",
     body:JSON.stringify(
       {
@@ -83,7 +95,6 @@ const checkStat= () => {
     return results.json()
   }).then(myjson=>{
     if(myjson['vreg']===true){
-      clearInterval(callinInterval);
       Router.push('/account_done')
     }   
   

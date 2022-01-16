@@ -3,13 +3,16 @@ import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import verified from '../../public/success.svg'
 import Logo from '../../public/logo.svg'
-import { useRouter } from 'next/router'
+import Router,{ useRouter } from 'next/router'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 export default function Home() {
     const router = useRouter()
   const { id } = router.query
-  fetch('https://student-id-verification.azurewebsites.net/api/getter',{
+
+  useEffect(() => {
+    fetch('/api/getter',{
     method: "POST",
     body:JSON.stringify(
       {
@@ -22,8 +25,8 @@ export default function Home() {
   }).then(results=>{
     return results.json()
   }).then(myjson=>{
-  if(myjson['id']==id){
-    fetch('https://student-id-verification.azurewebsites.net/api/setter',{
+  if(myjson['id']==id && myjson['vstat']!=false){
+    fetch('/api/setter',{
         method : "PATCH",
         body:JSON.stringify(
           {
@@ -37,9 +40,14 @@ export default function Home() {
       })
 
     }
-
+    else{
+      Router.push('/')
+    }
 
   })
+  
+  }, [id])
+  
   
 
   return (

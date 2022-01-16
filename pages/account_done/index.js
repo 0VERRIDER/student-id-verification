@@ -6,6 +6,7 @@ import Logo from '../../public/logo.svg'
 import Link from 'next/link'
 
 export default function Home() {
+
   return (
     <div className={styles.container}>
 <div className={styles.logoHeader}>

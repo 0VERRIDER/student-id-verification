@@ -5,14 +5,37 @@ import verified from '../../public/success.svg'
 import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
 import Router from 'next/router'
-
+import { useEffect } from 'react'
 export default function Home() {
   const router = useRouter()
   const { id } = router.query
 
-  setTimeout(()=>{
-    Router.push("/email_verification/"+id)
-  },5000)
+
+  useEffect(() => {
+    fetch('/api/getter',{
+      method: "POST",
+      body:JSON.stringify(
+        {
+          id: id
+        }
+      ),
+      headers:{
+        "Content-Type": "application/json"
+      }
+    }).then(results=>{
+      return results.json()
+    }).then(myjson=>{
+      if(myjson['vreg']===false && myjson['vstat']===true){
+        setTimeout(()=>{
+          Router.push("/email_verification/"+id)
+        },5000)
+    }
+    else{
+      Router.push("/")
+    }
+    })
+  }, [id])
+  
   
   return (
     <div className={styles.container}>

@@ -4,108 +4,115 @@ import styles from '../../styles/Home.module.css'
 import dummyId from '../../public/check_id.svg'
 import Logo from '../../public/logo.svg'
 import { useRouter } from 'next/router'
-
+import { useEffect } from 'react'
 export default function Home() {
   const router = useRouter()
   const { id } = router.query
-  let name = "";
-  let counter = 0;
-  fetch('http://student-id-verification.azurewebsites.net/api/getter',{
-    method: "POST",
-    body:JSON.stringify(
-      {
-        id: id
+
+
+ 
+
+  useEffect(() => {
+    let name = "";
+    let counter = 0;
+    fetch('/api/getter',{
+      method: "POST",
+      body:JSON.stringify(
+        {
+          id: id
+        }
+      ),
+      headers:{
+        "Content-Type": "application/json"
       }
-    ),
-    headers:{
-      "Content-Type": "application/json"
+    }).then(results=>{
+      return results.json()
+    }).then(myjson=>{
+      console.log(myjson['image'])
+      name = myjson['name'];
+      userAction(myjson['image']);
+    })
+    const userAction = async (file_to_do) => {
+      const response = await fetch('https://textextractorservice.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Ocp-Apim-Subscription-Key' : '97e1f6031f7443549890b7e750206197'
+        },
+        body: JSON.stringify({source:file_to_do})
+      });
+      //const myJson = await response.json(); //extract JSON from the http response
+      let location= response.headers.get('Operation-Location');
+      // do something with myJson
+      if(response.status == 202){
+        console.log("Loading....");
+  
+        setTimeout(getData(location),5000);
+      }
+      else{
+        console.log("error Occured");
+      }
     }
-  }).then(results=>{
-    return results.json()
-  }).then(myjson=>{
-    console.log(myjson['image'])
-    name = myjson['name'];
-    userAction(myjson['image']);
-  })
-  const userAction = async (file_to_do) => {
-    const response = await fetch('https://textextractorservice.cognitiveservices.azure.com/formrecognizer/v2.1/layout/analyze', {
-      method: 'POST',
+    function getData(location){ 
+      console.log("Loaded.")
+       fetch(location,{
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Ocp-Apim-Subscription-Key' : '97e1f6031f7443549890b7e750206197'
-      },
-      body: JSON.stringify({source:file_to_do})
-    });
-    //const myJson = await response.json(); //extract JSON from the http response
-    let location= response.headers.get('Operation-Location');
-    // do something with myJson
-    if(response.status == 202){
-      console.log("Loading....");
-
-      setTimeout(getData(location),5000);
-    }
-    else{
-      console.log("error Occured");
-    }
-  }
-
-  function getData(location){ 
-    console.log("Loaded.")
-     fetch(location,{
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Ocp-Apim-Subscription-Key' : '97e1f6031f7443549890b7e750206197'
-    }
-  }
-    ).then(result =>{
-      console.log(location)
-      const myData = result.json()
-    return myData
-  }).then(myjson=>{
-    if(myjson["status"]=="running"){
-      setTimeout(getData(location),10000);
-    }
-    else if(myjson["status"] == "succeeded"){
-    console.log(extract(myjson["analyzeResult"]["readResults"][0]["lines"]));
-    let data = extract(myjson["analyzeResult"]["readResults"][0]["lines"]);
-    data.forEach(item => {
-      if(item.toLowerCase() == name.toLowerCase()){
-        console.log("Checking " + item.toLowerCase() + " = " + name.toLowerCase())
-        counter = counter+1;
       }
-    });
-    console.log(name.toLowerCase());
-    if (counter>0){
-      fetch('/api/setter',{
-        method : "PATCH",
-        body:JSON.stringify(
-          {
-            id:id,
-            "vstatSet": "true"
-          }
-        ),
-        headers:{
-          "Content-Type":"application/json"
+    }
+      ).then(result =>{
+        console.log(location)
+        const myData = result.json()
+      return myData
+    }).then(myjson=>{
+      if(myjson["status"]=="running"){
+        setTimeout(getData(location),10000);
+      }
+      else if(myjson["status"] == "succeeded"){
+      console.log(extract(myjson["analyzeResult"]["readResults"][0]["lines"]));
+      let data = extract(myjson["analyzeResult"]["readResults"][0]["lines"]);
+      data.forEach(item => {
+        if(item.toLowerCase() == name.toLowerCase()){
+          console.log("Checking " + item.toLowerCase() + " = " + name.toLowerCase())
+          counter = counter+1;
         }
-      })
-      Router.push("/verified/"+id)
-    }
-    else{
-      alert("Verification unsucessfull go back")
-    }
-    }
-    else{
-      console.log("Extraction Unsuccessful");
+      });
       console.log(name.toLowerCase());
+      if (counter>0){
+        fetch('/api/setter',{
+          method : "PATCH",
+          body:JSON.stringify(
+            {
+              id:id,
+              "vstatSet": "true"
+            }
+          ),
+          headers:{
+            "Content-Type":"application/json"
+          }
+        })
+        Router.push("/verified/"+id)
+      }
+      else{
+        alert("Verification unsucessfull go back")
+      }
+      }
+      else{
+        console.log("Extraction Unsuccessful");
+        console.log(name.toLowerCase());
+  
+      }
+    }).catch(err=>{
+      console.log("Extraction unsuccessful");
+    });
+  }
+  const extract = (arr) => arr.reduce((acc, obj) => acc.concat(obj.text, extract(obj.items || [])), [])
+  }, [id])
+  
 
-    }
-  }).catch(err=>{
-    console.log("Extraction unsuccessful");
-  });
-}
-const extract = (arr) => arr.reduce((acc, obj) => acc.concat(obj.text, extract(obj.items || [])), [])
-
+  
   return (
     <div className={styles.container}>
 <div className={styles.logoHeader}>

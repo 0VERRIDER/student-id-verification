@@ -6,46 +6,48 @@ import styles from '../../styles/Home.module.css'
 import BannerIcon from '../../public/id_verification.png'
 import Logo from '../../public/logo.svg'
 import QRcode from 'qrcode'
-import mongoose from 'mongoose'
-import connectDB from '../../middleware/mongo';
-import Users from '../../models/student-model';
+import { useEffect } from 'react'
 
 export default function Home() {
   const router = useRouter()
   const { id } = router.query
   const canvas = useRef(null);
 
-   fetch("http://student-id-verification.azurewebsites.net/api/getter",{
-    method : "POST",
-    body:JSON.stringify({
-      "id" : id
-    }),
-    headers:{
-      "Content-Type": "application/json"
-    }
-  }).then((result)=>{
-    return result.json();
- }).then((myjson)=>{
+  useEffect(() => {
 
-  if(myjson['vstat']===true){
-   Router.push("/verifying/"+myjson['id'])
-  }
-  else if(myjson['vreg']===true){
-    Router.push("/login")
-
-  }
- })
-
-  try{
-  // const canvas = document.getElementById("canvas");
-  if (canvas){
-      QRcode.toCanvas(canvas.current, window.location.href)}
-        else{
-            console.log("error")
-        }
-      }
-      catch(err){
-      }
+    fetch("/api/getter",{
+     method : "POST",
+     body:JSON.stringify({
+       "id" : id
+     }),
+     headers:{
+       "Content-Type": "application/json"
+     }
+   }).then((result)=>{
+     return result.json();
+  }).then((myjson)=>{
+ 
+   if(myjson['vstat']===true){
+    Router.push("/email_verification/"+myjson['id'])
+   }
+   else if(myjson['vreg']===true){
+     Router.push("/login")
+ 
+   }
+  })
+ 
+   try{
+   // const canvas = document.getElementById("canvas");
+   if (canvas){
+       QRcode.toCanvas(canvas.current, window.location.href)}
+         else{
+             console.log("error")
+         }
+       }
+       catch(err){
+       }
+  }, [id])
+  
 
   const formHandler = async (event)=>{
     
@@ -96,7 +98,7 @@ Router.push("/verifying/"+id)
        </div>
        <div className={styles.subText}>Scan to continue in Mobile device</div>
        <div className={styles.seperator}><hr></hr><span className={styles.orSeperator}>OR</span></div>
-       <div className={styles.subText}>Upload your pancard</div>
+       <div className={styles.subText}>Upload your ID with full name as per registration</div>
        <form onSubmit={formHandler}>
             <input type="file" id="myFile" accept=".jpg, .png, .jpeg" name="file" required/>
         <input type="submit"/>
